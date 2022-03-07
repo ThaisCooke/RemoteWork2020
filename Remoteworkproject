@@ -3,23 +3,64 @@ SELECT Gender, Timepreferredworkingremoteinthefuture
   WHERE gender = 'Male'
   AND Timepreferredworkingremoteinthefuture IS NOT NULL
 
-  SELECT Gender, Timepreferredworkingremoteinthefuture
-  FROM dbo.Remotework2020
-  WHERE gender = 'Male'
-  AND Timepreferredworkingremoteinthefuture IS NOT NULL
+  --Percentage Breakdown Between Male and Female of Workers who prefer to work remote
+SELECT Gender, Timepreferredworkingremoteinthefuture,
+CASE
+WHEN Timepreferredworkingremoteinthefuture < 0.3 THEN 'Less than 30%'
+WHEN Timepreferredworkingremoteinthefuture Between 0.4 AND 0.5 THEN 'Between 40 and 50%'
+WHEN Timepreferredworkingremoteinthefuture BETWEEN 0.6 AND 0.7 THEN 'Between 60 and 70%'
+ELSE 'More than 70%'
+END AS PercentageBreakdown
+FROM dbo.RemoteWork2020
+WHERE Timepreferredworkingremoteinthefuture IS NOT NULL
 
-SELECT CONVERT(VARCHAR(50),Timepreferredworkingremoteinthefuture*100)+ '%' as PercentWithConvert, 
-CAST(Timepreferredworkingremoteinthefuture*100 AS VARCHAR(50))+ '%' as PercentWithCAST
+-- Number of Males who prefer to work remote when number is less than 30%
+SELECT COUNT (Gender)
 FROM dbo.Remotework2020
+WHERE Gender = 'male'
+AND Timepreferredworkingremoteinthefuture < 0.3 
 
-SELECT Gender, CONVERT(VARCHAR(50),Timepreferredworkingremoteinthefuture*100)+ '%' as PercentWithConvert, 
-CAST(Timepreferredworkingremoteinthefuture*100 AS VARCHAR(50))+ '%' as PercentWithCAST
+-- Number of Females who prefer to work remote when number is less than 30%
+SELECT COUNT (Gender)
 FROM dbo.Remotework2020
-WHERE gender = 'Male'
-AND Timepreferredworkingremoteinthefuture IS NOT NULL
+WHERE Gender = 'female'
+AND Timepreferredworkingremoteinthefuture < 0.3 
 
-SELECT Gender, CONVERT(VARCHAR(50),Timepreferredworkingremoteinthefuture*100)+ '%' as PercentWithConvert, 
-CAST(Timepreferredworkingremoteinthefuture*100 AS VARCHAR(50))+ '%' as PercentWithCAST
+-- Number of Males who prefer to work remote when number is between 40 and 50%
+SELECT COUNT (Gender)
 FROM dbo.Remotework2020
-WHERE gender = 'Female'
-AND Timepreferredworkingremoteinthefuture IS NOT NULL
+WHERE Gender = 'male'
+AND Timepreferredworkingremoteinthefuture Between 0.4 AND 0.5
+
+-- Number of Females who prefer to work remote when number is between 40 anf 50%
+SELECT COUNT (Gender)
+FROM dbo.Remotework2020
+WHERE Gender = 'female'
+AND Timepreferredworkingremoteinthefuture Between 0.4 AND 0.5
+
+-- Number of Males who prefer to work remote when number is between 60 and 70%
+SELECT COUNT (Gender)
+FROM dbo.Remotework2020
+WHERE Gender = 'male'
+AND Timepreferredworkingremoteinthefuture Between 0.6 AND 0.7
+
+-- Number of Females who prefer to work remote when number is between 60 and 70%
+SELECT COUNT (Gender)
+FROM dbo.Remotework2020
+WHERE Gender = 'female'
+AND Timepreferredworkingremoteinthefuture Between 0.6 AND 0.7
+
+-- Number of Males who prefer to work remote when number is more than 70%
+SELECT COUNT (Gender)
+FROM dbo.Remotework2020
+WHERE Gender = 'male'
+AND Timepreferredworkingremoteinthefuture > 0.7
+
+-- Number of Females who prefer to work remote when number is between 60 and 70%
+SELECT COUNT (Gender)
+FROM dbo.Remotework2020
+WHERE Gender = 'female'
+AND Timepreferredworkingremoteinthefuture > 0.7
+
+
+

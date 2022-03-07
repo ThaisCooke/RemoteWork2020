@@ -1,0 +1,25 @@
+SELECT Gender, Timepreferredworkingremoteinthefuture
+  FROM dbo.Remotework2020
+  WHERE gender = 'Male'
+  AND Timepreferredworkingremoteinthefuture IS NOT NULL
+
+  SELECT Gender, Timepreferredworkingremoteinthefuture
+  FROM dbo.Remotework2020
+  WHERE gender = 'Male'
+  AND Timepreferredworkingremoteinthefuture IS NOT NULL
+
+SELECT CONVERT(VARCHAR(50),Timepreferredworkingremoteinthefuture*100)+ '%' as PercentWithConvert, 
+CAST(Timepreferredworkingremoteinthefuture*100 AS VARCHAR(50))+ '%' as PercentWithCAST
+FROM dbo.Remotework2020
+
+SELECT Gender, CONVERT(VARCHAR(50),Timepreferredworkingremoteinthefuture*100)+ '%' as PercentWithConvert, 
+CAST(Timepreferredworkingremoteinthefuture*100 AS VARCHAR(50))+ '%' as PercentWithCAST
+FROM dbo.Remotework2020
+WHERE gender = 'Male'
+AND Timepreferredworkingremoteinthefuture IS NOT NULL
+
+SELECT Gender, CONVERT(VARCHAR(50),Timepreferredworkingremoteinthefuture*100)+ '%' as PercentWithConvert, 
+CAST(Timepreferredworkingremoteinthefuture*100 AS VARCHAR(50))+ '%' as PercentWithCAST
+FROM dbo.Remotework2020
+WHERE gender = 'Female'
+AND Timepreferredworkingremoteinthefuture IS NOT NULL

@@ -13,6 +13,7 @@ ELSE 'More than 70%'
 END AS PercentageBreakdown
 FROM dbo.RemoteWork2020
 WHERE Timepreferredworkingremoteinthefuture IS NOT NULL
+ORDER BY Gender
 
 -- Number of Males who prefer to work remote when number is less than 30%
 SELECT COUNT (Gender)
@@ -61,6 +62,57 @@ SELECT COUNT (Gender)
 FROM dbo.Remotework2020
 WHERE Gender = 'female'
 AND Timepreferredworkingremoteinthefuture > 0.7
+
+-- Preference for remote work based on Household
+
+SELECT Household, Timepreferredworkingremoteinthefuture,
+CASE
+WHEN Timepreferredworkingremoteinthefuture < 0.3 THEN 'Less than 30%'
+WHEN Timepreferredworkingremoteinthefuture Between 0.4 AND 0.5 THEN 'Between 40 and 50%'
+WHEN Timepreferredworkingremoteinthefuture BETWEEN 0.6 AND 0.7 THEN 'Between 60 and 70%'
+ELSE 'More than 70%'
+END AS PercentageBreakdown
+FROM dbo.RemoteWork2020
+WHERE Timepreferredworkingremoteinthefuture IS NOT NULL
+ORDER BY Household
+
+-- Couple with children who don't prefer to work remote
+SELECT COUNT (Household)
+FROM dbo.Remotework2020
+WHERE Household = 'Couple with Dependent Children'
+AND Timepreferredworkingremoteinthefuture < 0.5
+
+-- Couple with children who prefer to work remote
+SELECT COUNT (Household)
+FROM dbo.Remotework2020
+WHERE Household = 'Couple with Dependent Children'
+AND Timepreferredworkingremoteinthefuture > 0.5
+
+-- Childless couple who don't prefer to work remote
+SELECT COUNT (Household)
+FROM dbo.Remotework2020
+WHERE Household = 'Couple with No Dependent Children'
+AND Timepreferredworkingremoteinthefuture < 0.5
+
+-- Childless couple who prefer to work remote
+SELECT COUNT (Household)
+FROM dbo.Remotework2020
+WHERE Household = 'Couple with No Dependent Children'
+AND Timepreferredworkingremoteinthefuture > 0.5
+
+-- Single person who don't prefer to work remote
+SELECT COUNT (Household)
+FROM dbo.Remotework2020
+WHERE Household = 'Single person'
+AND Timepreferredworkingremoteinthefuture < 0.5
+
+-- Single person who prefers to work remote
+SELECT COUNT (Household)
+FROM dbo.Remotework2020
+WHERE Household = 'Single person'
+AND Timepreferredworkingremoteinthefuture > 0.5
+
+
 
 
 
